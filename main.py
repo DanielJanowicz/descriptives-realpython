@@ -205,3 +205,70 @@ z.var(ddof=1)
 z_with_nan.var(ddof=1)
 
 ## Standard Deviation
+std_ = var_ ** 0.5
+std_
+
+std_ = statistics.stdev(x)
+std_
+
+np.std(y, ddof=1)
+y.std(ddof=1)
+np.std(y_with_nan, ddof=1)
+y_with_nan.std(ddof=1)
+np.nanstd(y_with_nan, ddof=1)
+
+# Degrees if freedin to 1
+z.std(ddof=1)
+z_with_nan.std(ddof=1)
+
+## Skewness
+x = [8.0, 1, 2.5, 4, 28.0]
+n = len(x)
+mean_ = sum(x) / n
+var_ = sum((item - mean_)**2 for item in x) / (n - 1)
+std_ = var_ ** 0.5
+skew_ = (sum((item - mean_)**3 for item in x)
+         * n / ((n - 1) * (n - 2) * std_**3))
+skew_
+
+y, y_with_nan = np.array(x), np.array(x_with_nan)
+scipy.stats.skew(y, bias=False)
+scipy.stats.skew(y_with_nan, bias=False)
+
+y, y_with_nan = np.array(x), np.array(x_with_nan)
+scipy.stats.skew(y, bias=False)
+scipy.stats.skew(y_with_nan, bias=False)
+
+## Percentiles
+x = [-5.0, -1.1, 0.1, 2.0, 8.0, 12.8, 21.0, 25.8, 41.0]
+statistics.quantiles(x, n=2)
+statistics.quantiles(x, n=4, method='inclusive')
+
+y = np.array(x)
+np.percentile(y, 5)
+np.percentile(y, 95)
+
+np.percentile(y, [25, 50, 75])
+np.median(y)
+
+y_with_nan = np.insert(y, 2, np.nan)
+y_with_nan
+
+np.nanpercentile(y_with_nan, [25, 50, 75])
+np.quantile(y, 0.05)
+np.quantile(y, 0.95)
+np.quantile(y, [0.25, 0.5, 0.75])
+np.nanquantile(y_with_nan, [0.25, 0.5, 0.75])
+
+z, z_with_nan = pd.Series(y), pd.Series(y_with_nan)
+z.quantile(0.05)
+z.quantile(0.95)
+z.quantile([0.25, 0.5, 0.75])
+z_with_nan.quantile([0.25, 0.5, 0.75])
+
+## Ranges
+np.ptp(y)
+np.ptp(z)
+np.ptp(y_with_nan)
+np.ptp(z_with_nan)
+
