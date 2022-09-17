@@ -272,3 +272,158 @@ np.ptp(z)
 np.ptp(y_with_nan)
 np.ptp(z_with_nan)
 
+np.amax(y) - np.amin(y)
+np.nanmax(y_with_nan) - np.nanmin(y_with_nan)
+y.max() - y.min()
+z.max() - z.min()
+z_with_nan.max() - z_with_nan.min()
+
+quartiles = np.quantile(y, [0.25, 0.75])
+quartiles[1] - quartiles[0]
+quartiles = z.quantile([0.25, 0.75])
+quartiles[0.75] - quartiles[0.25]
+
+## Summary of Descriptrive Statistics
+result = scipy.stats.describe(y, ddof=1, bias=False)
+result
+
+result.nobs
+result.minmax[0]  # Min
+result.minmax[1]  # Max
+result.mean
+result.variance
+result.skewness
+result.kurtosis
+
+result = z.describe()
+result
+
+result['mean']
+result['std']
+result['min']
+result['max']
+result['25%']
+result['50%']
+result['75%']
+
+## Measures of Correlation Between Pairs of Data
+x = list(range(-10, 11))
+y = [0, 2, 2, 2, 2, 3, 3, 6, 7, 4, 7, 6, 6, 9, 4, 5, 5, 10, 11, 12, 14]
+x_, y_ = np.array(x), np.array(y)
+x__, y__ = pd.Series(x_), pd.Series(y_)
+
+n = len(x)
+mean_x, mean_y = sum(x) / n, sum(y) / n
+cov_xy = (sum((x[k] - mean_x) * (y[k] - mean_y) for k in range(n))
+          / (n - 1))
+cov_xy
+
+cov_matrix = np.cov(x_, y_)
+cov_matrix
+
+x_.var(ddof=1)
+y_.var(ddof=1)
+
+cov_xy = cov_matrix[0, 1]
+cov_xy
+cov_xy = cov_matrix[1, 0]
+cov_xy
+
+cov_xy = x__.cov(y__)
+cov_xy
+cov_xy = y__.cov(x__)
+cov_xy
+
+## Correlation Coefficient
+var_x = sum((item - mean_x)**2 for item in x) / (n - 1)
+var_y = sum((item - mean_y)**2 for item in y) / (n - 1)
+std_x, std_y = var_x ** 0.5, var_y ** 0.5
+r = cov_xy / (std_x * std_y)
+r
+
+r, p = scipy.stats.pearsonr(x_, y_)
+r
+p
+
+corr_matrix = np.corrcoef(x_, y_)
+corr_matrix
+
+r = corr_matrix[0, 1]
+r
+r = corr_matrix[1, 0]
+r
+
+scipy.stats.linregress(x_, y_) 
+
+result = scipy.stats.linregress(x_, y_)
+r = result.rvalue
+r
+
+r = x__.corr(y__)
+r
+r = y__.corr(x__)
+r
+
+## 2D Data
+a = np.array([[1, 1, 1],
+              [2, 3, 1],
+              [4, 9, 2],
+              [8, 27, 4],
+              [16, 1, 1]])
+a
+
+np.mean(a)
+a.mean()
+np.median(a)
+a.var(ddof=1)
+
+np.mean(a, axis=0)
+a.mean(axis=0)
+
+np.mean(a, axis=1)
+a.mean(axis=1)
+
+np.median(a, axis=0)
+np.median(a, axis=1)
+a.var(axis=0, ddof=1)
+a.var(axis=1, ddof=1)
+
+scipy.stats.gmean(a)  # Default: axis=0
+scipy.stats.gmean(a, axis=0)
+
+scipy.stats.gmean(a, axis=1)
+
+scipy.stats.gmean(a, axis=None) 
+
+scipy.stats.describe(a, axis=None, ddof=1, bias=False)
+scipy.stats.describe(a, ddof=1, bias=False)  # Default: axis=0
+scipy.stats.describe(a, axis=1, ddof=1, bias=False)
+
+result = scipy.stats.describe(a, axis=1, ddof=1, bias=False)
+result.mean
+
+row_names = ['first', 'second', 'third', 'fourth', 'fifth']
+col_names = ['A', 'B', 'C']
+df = pd.DataFrame(a, index=row_names, columns=col_names)
+df
+
+df.mean()
+df.var()
+
+df.mean(axis=1)
+df.var(axis=1)
+
+df['A']
+
+df['A'].mean()
+df['A'].var()
+
+df.values
+df.to_numpy()
+
+df.describe()
+
+df.describe().at['mean', 'A']
+df.describe().at['50%', 'B']
+
+## Visualization of Data
