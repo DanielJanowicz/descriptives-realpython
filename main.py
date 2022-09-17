@@ -115,3 +115,93 @@ scipy.stats.gmean(z)
 
 ## Median
 
+n = len(x)
+if n % 2:
+    median_ = sorted(x)[round(0.5*(n-1))]
+else:
+    x_ord, index = sorted(x), round(0.5 * n)
+    median_ = 0.5 * (x_ord[index-1] + x_ord[index])
+
+median_
+
+median_ = statistics.median(x)
+median_
+median_ = statistics.median(x[:-1])
+median_
+
+statistics.median_low(x[:-1])
+statistics.median_high(x[:-1])
+
+statistics.median(x_with_nan)
+statistics.median_low(x_with_nan)
+statistics.median_high(x_with_nan)
+
+median_ = np.median(y)
+median_
+median_ = np.median(y[:-1])
+median_
+
+np.nanmedian(y_with_nan)
+np.nanmedian(y_with_nan[:-1])
+
+z.median()
+z_with_nan.median()
+
+## Mode
+u = [2, 3, 2, 8, 12]
+mode_ = max((u.count(item), item) for item in set(u))[1]
+mode_
+
+mode_ = statistics.mode(u)
+mode_
+mode_ = statistics.multimode(u)
+mode_
+
+v = [12, 15, 12, 15, 21, 15, 12]
+statistics.mode(v)  # Raises StatisticsError
+statistics.multimode(v)
+
+statistics.mode([2, math.nan, 2])
+statistics.multimode([2, math.nan, 2])
+statistics.mode([2, math.nan, 0, math.nan, 5])
+statistics.multimode([2, math.nan, 0, math.nan, 5])
+
+u, v = np.array(u), np.array(v)
+mode_ = scipy.stats.mode(u)
+mode_
+mode_ = scipy.stats.mode(v)
+mode_
+
+mode_.mode
+mode_.count
+
+u, v, w = pd.Series(u), pd.Series(v), pd.Series([2, 2, math.nan])
+u.mode()
+v.mode()
+w.mode()
+
+## Variance
+n = len(x)
+mean_ = sum(x) / n
+var_ = sum((item - mean_)**2 for item in x) / (n - 1)
+var_
+
+var_ = statistics.variance(x)
+var_
+
+statistics.variance(x_with_nan) # Raises StatisticsError
+
+var_ = np.var(y, ddof=1)
+var_
+var_ = y.var(ddof=1)
+var_
+
+np.var(y_with_nan, ddof=1)
+y_with_nan.var(ddof=1)
+
+np.nanvar(y_with_nan, ddof=1)
+
+z.var(ddof=1)
+z_with_nan.var(ddof=1)
+
+## Standard Deviation
